@@ -1,14 +1,14 @@
-import { Injectable, Inject } from '@nestjs/common';
-import { NatsConnection, connect } from 'nats';
-import { NATS_JETSTREAM_OPTIONS } from './constants';
-import { NatsJetStreamClientOptions } from './interfaces/nats-jetstream-client-options.interface';
+import { Injectable, Inject } from "@nestjs/common";
+import { NatsConnection, connect } from "nats";
+import { NATS_JETSTREAM_OPTIONS } from "./constants";
+import { NatsJetStreamClientOptions } from "./interfaces/nats-jetstream-client-options.interface";
 
 @Injectable()
 export class NatsJetStreamTransportConnection {
   private nc: NatsConnection;
 
   constructor(
-    @Inject(NATS_JETSTREAM_OPTIONS) private options: NatsJetStreamClientOptions,
+    @Inject(NATS_JETSTREAM_OPTIONS) private options: NatsJetStreamClientOptions
   ) {
     this.assertConnection();
   }
@@ -19,9 +19,10 @@ export class NatsJetStreamTransportConnection {
 
     return this.nc;
   }
-  private async close(): Promise<void> {
-    await this.nc.drain();
-    await this.nc.close();
+  async close(): Promise<void> {
+    const nc = await this.assertConnection();
+    await nc.drain();
+    await nc.close();
     this.nc = undefined;
   }
 }
