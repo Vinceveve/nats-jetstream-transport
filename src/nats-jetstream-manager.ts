@@ -1,12 +1,12 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject } from "@nestjs/common";
 import {
   ConsumerAPI,
   JetStreamManager,
   StreamAPI,
-} from 'nats/lib/nats-base-client/types';
-import { NATS_JETSTREAM_OPTIONS } from './constants';
-import { NatsJetStreamClientOptions } from './interfaces/nats-jetstream-client-options.interface';
-import { NatsJetStreamTransportConnection } from './nats-jetstream-transport.connection';
+} from "nats/lib/nats-base-client/types";
+import { NATS_JETSTREAM_OPTIONS } from "./constants";
+import { NatsJetStreamClientOptions } from "./interfaces/nats-jetstream-client-options.interface";
+import { NatsJetStreamTransportConnection } from "./nats-jetstream-transport.connection";
 
 @Injectable()
 export class NatsJetStreamManager {
@@ -14,7 +14,7 @@ export class NatsJetStreamManager {
 
   constructor(
     private nc: NatsJetStreamTransportConnection,
-    @Inject(NATS_JETSTREAM_OPTIONS) private options: NatsJetStreamClientOptions,
+    @Inject(NATS_JETSTREAM_OPTIONS) private options: NatsJetStreamClientOptions
   ) {}
   private async assertJetStreamManager() {
     if (!this.jsm) {
